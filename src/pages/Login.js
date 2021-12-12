@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { Input, Button } from '../components';
 
-// eslint-disable-next-line max-len
-const EMAIL_REGEXP = /^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i;
+const EMAIL_REGEXP = /^[^@\s]+@[^@\s.]+\.[^@.\s]+$/i;
 
 const MINIMUM_PASWORD = 6;
 
@@ -30,25 +30,24 @@ const Login = ({ saveEmail }) => {
     ? <Redirect to="/carteira" />
     : (
       <>
-        <input
-          value={ email }
-          onChange={ ({ target: { value } }) => setEmail(value) }
+        <Input
+          inputValue={ email }
+          onChange={ setEmail }
           type="email"
-          data-testid="email-input"
+          dataTestid="email-input"
         />
-        <input
-          value={ password }
-          onChange={ ({ target: { value } }) => setPassword(value) }
+        <Input
+          inputValue={ password }
+          onChange={ setPassword }
           type="password"
-          data-testid="password-input"
+          dataTestid="password-input"
         />
-        <button
+        <Button
           disabled={ buttonDisabeld }
           type="button"
           onClick={ handleSubmit }
-        >
-          Entrar
-        </button>
+          text="Entrar"
+        />
       </>
     );
 };

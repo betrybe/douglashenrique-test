@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import * as actions from '../actions';
+import { FormExpenses, Header, TableExpenses } from '../components';
+import { walletDefaultProps, walletProps } from '../propTypes';
 
 const METHOD_ARRAY = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const TAG_ARRAY = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-const HEADER_TABLE = [
-  'Descrição',
-  'Tag',
-  'Método de pagamento',
-  'Valor',
-  'Moeda',
-  'Câmbio utilizado',
-  'Valor convertido',
-  'Moeda de conversão',
-  'Editar/Excluir',
-];
-
 const Wallet = ({
   email,
   saveExpense,
@@ -77,129 +66,32 @@ const Wallet = ({
 
   return (
     <>
-      <>
-        <h2 data-testid="email-field">{email}</h2>
-        <p data-testid="total-field">
-          {expenses.reduce(
-            (acc, curr) => acc + (
-              Number(curr.value) * Number(curr.exchangeRates[curr.currency].ask)
-            ),
-            0,
-          ).toFixed(2)}
-        </p>
-        <p data-testid="header-currency-field">BRL</p>
-      </>
-      <form onSubmit={ handleSubmit }>
-        <label htmlFor="valueInput">
-          Valor:
-          <input
-            value={ value }
-            onChange={ ({ target }) => setValue(target.value) }
-            data-testid="value-input"
-            id="valueInput"
-            type="number"
-            name="value"
-          />
-        </label>
-        <label htmlFor="descriptionInput">
-          Descrição:
-          <input
-            data-testid="description-input"
-            value={ description }
-            onChange={ ({ target }) => setDescription(target.value) }
-            id="descriptionInput"
-            type="text"
-            name="description"
-          />
-        </label>
-        <label htmlFor="selectCurrency">
-          Moeda:
-          <select
-            data-testid="currency-input"
-            value={ currency }
-            onChange={ ({ target }) => setCurrency(target.value) }
-            id="selectCurrency"
-            name="currency"
-          >
-            {currencies.map(
-              (label) => <option key={ label }>{label}</option>,
-            )}
-          </select>
-        </label>
-        <label htmlFor="selectPayment">
-          Método de pagamento:
-          <select
-            data-testid="method-input"
-            value={ method }
-            onChange={ ({ target }) => setMethod(target.value) }
-            id="selectPayment"
-            name="method"
-          >
-            {METHOD_ARRAY.map(
-              (label) => <option key={ label }>{label}</option>,
-            )}
-          </select>
-        </label>
-        <label htmlFor="selectTag">
-          Tag:
-          <select
-            data-testid="tag-input"
-            id="selectTag"
-            name="tag"
-            value={ tag }
-            onChange={ ({ target }) => setTag(target.value) }
-          >
-            {TAG_ARRAY.map(
-              (label) => <option key={ label }>{label}</option>,
-            )}
-          </select>
-        </label>
-        <button type="submit">
-          {id === '' ? 'Adicionar despesa' : 'Editar despesa' }
-        </button>
-      </form>
-      <table>
-        <thead>
-          <tr>
-            {HEADER_TABLE.map((name) => <th key={ name }>{name}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((expense) => (
-            <tr key={ expense.id }>
-              <td>{expense.description}</td>
-              <td>{expense.tag}</td>
-              <td>{expense.method}</td>
-              <td>{expense.value}</td>
-              <td>{expense.exchangeRates[expense.currency].name}</td>
-              <td>{Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
-              <td>
-                {
-                  (Number(expense.value)
-                  * Number(expense.exchangeRates[expense.currency].ask)).toFixed(2)
-                }
-              </td>
-              <td>Real</td>
-              <td>
-                <button
-                  data-testid="edit-btn"
-                  type="button"
-                  onClick={ () => editExpenseActive(expense.id) }
-                >
-                  editar
-                </button>
-                <button
-                  data-testid="delete-btn"
-                  onClick={ () => deleteExpense(expense.id) }
-                  type="button"
-                >
-                  excluir
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Header
+        expenses={ expenses }
+        email={ email }
+      />
+      <FormExpenses
+        handleSubmit={ handleSubmit }
+        value={ value }
+        setValue={ setValue }
+        description={ description }
+        setDescription={ setDescription }
+        currency={ currency }
+        setCurrency={ setCurrency }
+        currencies={ currencies }
+        method={ method }
+        setMethod={ setMethod }
+        tag={ tag }
+        setTag={ setTag }
+        id={ String(id) }
+        METHOD_ARRAY={ METHOD_ARRAY }
+        TAG_ARRAY={ TAG_ARRAY }
+      />
+      <TableExpenses
+        expenses={ expenses }
+        editExpenseActive={ editExpenseActive }
+        deleteExpense={ deleteExpense }
+      />
     </>
   );
 };
@@ -217,42 +109,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
-Wallet.propTypes = {
-  email: PropTypes.string,
-  saveExpense: PropTypes.func.isRequired,
-  deleteExpense: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string),
-  getCurrencyOptions: PropTypes.func.isRequired,
-  editExpense: PropTypes.func.isRequired,
-  expenses: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      value: PropTypes.string,
-      description: PropTypes.string,
-      currency: PropTypes.string,
-      method: PropTypes.string,
-      tag: PropTypes.string,
-      exchangeRates: PropTypes.objectOf(
-        PropTypes.shape({
-          code: PropTypes.string,
-          codein: PropTypes.string,
-          name: PropTypes.string,
-          high: PropTypes.string,
-          low: PropTypes.string,
-          varBid: PropTypes.string,
-          pctChange: PropTypes.string,
-          bid: PropTypes.string,
-          ask: PropTypes.string,
-          timestamp: PropTypes.string,
-          create_date: PropTypes.string,
-        }),
-      ),
-    }),
-  ),
-};
+Wallet.propTypes = walletProps;
 
-Wallet.defaultProps = {
-  email: '',
-  expenses: [],
-  currencies: [],
-};
+Wallet.defaultProps = walletDefaultProps;
