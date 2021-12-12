@@ -1,4 +1,5 @@
 import React from 'react';
+import TextField from '@mui/material/TextField';
 import { inputProps, inputDefaultProps } from '../propTypes';
 
 const Input = ({
@@ -11,18 +12,19 @@ const Input = ({
   name,
   labelText,
 }) => (
-  <label htmlFor={ id }>
-    {labelText}
-    <input
-      value={ inputValue }
-      onChange={ ({ target: { value } }) => onChange(value) }
-      type={ type }
-      data-testid={ dataTestid }
-      className={ className }
-      id={ id }
-      name={ name }
-    />
-  </label>
+  <TextField
+    label={ labelText }
+    value={ inputValue }
+    onChange={ ({ target: { value } }) => onChange(value) }
+    type={ type }
+    inputProps={ { 'data-testid': dataTestid } }
+    className={ className }
+    id={ id }
+    name={ name }
+    margin="normal"
+    fullWidth
+    autoFocus
+  />
 );
 
 export default Input;
