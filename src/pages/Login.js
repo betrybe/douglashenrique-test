@@ -74,6 +74,7 @@ const Login = ({ saveEmail }) => {
             type="email"
             dataTestid="email-input"
             labelText="email"
+            id="email"
           />
           <Input
             containerStyle={ INPUT_STYLE }
@@ -82,6 +83,7 @@ const Login = ({ saveEmail }) => {
             type="password"
             dataTestid="password-input"
             labelText="password"
+            id="password"
           />
         </div>
         <div>
