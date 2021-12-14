@@ -1,5 +1,6 @@
 import React from 'react';
-import { tableExpensesDefaultProps, tableExpensesProps } from '../propTypes';
+import { tableExpensesDefaultProps, tableExpensesProps } from '../propTypesControl';
+import './TableExpenses.css';
 
 const HEADER_TABLE = [
   'Descrição',
@@ -43,6 +44,15 @@ const TableExpenses = ({
               data-testid="edit-btn"
               type="button"
               onClick={ () => editExpenseActive(expense.id) }
+              style={ { backgroundColor: 'lightblue',
+                borderRadius: '5px',
+                boxShadow: 'none',
+                color: 'white',
+                cursor: 'pointer',
+                margin: '10px 0px',
+                outline: 0,
+                padding: '5px 15px',
+              } }
             >
               editar
             </button>
@@ -50,6 +60,15 @@ const TableExpenses = ({
               data-testid="delete-btn"
               onClick={ () => deleteExpense(expense.id) }
               type="button"
+              style={ { backgroundColor: 'red',
+                borderRadius: '5px',
+                boxShadow: 'none',
+                color: 'white',
+                cursor: 'pointer',
+                margin: '10px 0px',
+                outline: 0,
+                padding: '5px 15px',
+              } }
             >
               excluir
             </button>

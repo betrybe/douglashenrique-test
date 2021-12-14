@@ -53,6 +53,7 @@ const inputProps = {
   id: PropTypes.string,
   name: PropTypes.string,
   labelText: PropTypes.string,
+  containerStyle: PropTypes.objectOf(PropTypes.any),
 };
 
 const inputDefaultProps = {
@@ -62,6 +63,7 @@ const inputDefaultProps = {
   id: '',
   name: '',
   labelText: '',
+  containerStyle: {},
 };
 
 const headerProps = {

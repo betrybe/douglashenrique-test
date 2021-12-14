@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import * as actions from '../actions';
 import { FormExpenses, Header, TableExpenses } from '../components';
-import { walletDefaultProps, walletProps } from '../propTypes';
+import { walletDefaultProps, walletProps } from '../propTypesControl';
 
 const METHOD_ARRAY = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const TAG_ARRAY = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -65,7 +65,14 @@ const Wallet = ({
   };
 
   return (
-    <>
+    <div
+      style={ {
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '90vh',
+        minWidth: '90vw',
+      } }
+    >
       <Header
         expenses={ expenses }
         email={ email }
@@ -92,7 +99,7 @@ const Wallet = ({
         editExpenseActive={ editExpenseActive }
         deleteExpense={ deleteExpense }
       />
-    </>
+    </div>
   );
 };
 

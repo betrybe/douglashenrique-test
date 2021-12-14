@@ -2,7 +2,7 @@ import React from 'react';
 import Button from './Button';
 import Input from './Input';
 import Select from './Select';
-import { formExpensesDefaultProps, formExpensesProps } from '../propTypes';
+import { formExpensesDefaultProps, formExpensesProps } from '../propTypesControl';
 
 const FormExpenses = ({
   handleSubmit,
@@ -21,7 +21,18 @@ const FormExpenses = ({
   TAG_ARRAY,
   METHOD_ARRAY,
 }) => (
-  <form onSubmit={ handleSubmit }>
+  <form
+    style={
+      { display: 'flex',
+        width: '99vh%',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        borderBottom: '1px black solid',
+        backgroundColor: 'black',
+        padding: '20px' }
+    }
+    onSubmit={ handleSubmit }
+  >
     <Input
       inputValue={ value }
       onChange={ setValue }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { selectDefaultProps, selectProps } from '../propTypes';
+import { selectDefaultProps, selectProps } from '../propTypesControl';
 
 const Select = ({
   id,
@@ -10,9 +10,15 @@ const Select = ({
   options,
   labelText,
 }) => (
-  <label htmlFor={ id }>
+  <label
+    style={
+      { color: 'white', display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }
+    }
+    htmlFor={ id }
+  >
     {labelText}
     <select
+      style={ { borderRadius: '10px', height: '30px', textAlign: 'center' } }
       data-testid={ dataTestid }
       value={ selectValue }
       onChange={ ({ target }) => onChange(target.value) }

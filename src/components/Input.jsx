@@ -1,5 +1,5 @@
 import React from 'react';
-import { inputProps, inputDefaultProps } from '../propTypes';
+import { inputProps, inputDefaultProps } from '../propTypesControl';
 
 const Input = ({
   inputValue = '',
@@ -10,10 +10,18 @@ const Input = ({
   id,
   name,
   labelText,
+  containerStyle,
 }) => (
-  <label htmlFor={ id }>
-    {labelText}
+  <div
+    style={
+      { ...containerStyle, display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }
+    }
+  >
+    <label style={ { color: 'white' } } htmlFor={ id }>
+      {labelText}
+    </label>
     <input
+      style={ { borderRadius: '10px', height: '20px' } }
       value={ inputValue }
       onChange={ ({ target: { value } }) => onChange(value) }
       type={ type }
@@ -22,7 +30,7 @@ const Input = ({
       id={ id }
       name={ name }
     />
-  </label>
+  </div>
 );
 
 export default Input;
